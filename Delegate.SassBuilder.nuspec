@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Delegate.SassBuilder</id>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <title>Delegate Sass Builder</title>
     <summary>Add auto build for .sass/.scss files</summary>
     <authors>Søren Laurits Nielsen (sln@delegate.dk)</authors>
     <owners>Søren Laurits Nielsen (sln@delegate.dk)</owners>
     <licenseUrl>http://opensource.org/licenses/ms-pl.html</licenseUrl>
-    <projectUrl>https://github.com/delegateas/Delegate_SassBuilder</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/delegateas/Delegate_SassBuilder/master/DelegateLogo_g.png</iconUrl>
+    <projectUrl>https://github.com/delegateas/Delegate.SassBuilder</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/delegateas/Delegate.SassBuilder/master/DelegateLogo_g.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Configures a project to automatically compile all SASS/SCSS files to css during build. No manual setup required and no dependencies are added to your project</description>
     <releaseNotes>Notice: Includes a compiled version of sassc-win </releaseNotes>
