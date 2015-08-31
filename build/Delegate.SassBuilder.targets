@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Note: Config and XML filenames should not contain a . character.  AppSettings.config = ok, Configuration.AppSettings.Config = bad -->
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SassExe Condition=" '$(SassExe)'=='' ">$(MSBuildThisFileDirectory)..\tool\sassc.exe</SassExe>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SassFiles Include="$(MSBuildProjectDirectory)\**\*.Sass">
+      <InProject>false</InProject>
+    </SassFiles>
+    <SassFiles Include="$(MSBuildProjectDirectory)\**\*.Scss">
+      <InProject>false</InProject>
+    </SassFiles>
+  </ItemGroup>
+ 
+  <!-- For old school inclusion -->
+  <PropertyGroup>
+      <BuildDependsOn>
+          Delegate_SassCompile;
+          $(BuildDependsOn);
+      </BuildDependsOn>
+      <CleanDependsOn>
+          Delegate_SassClean;
+          $(CleanDependsOn);
+      </CleanDependsOn>
+  </PropertyGroup>
+
+
+  <Target Name="Delegate_SassCompile" Inputs="@(SassFiles)" Outputs="@(SassFiles->'%(relativedir)%(Filename).css')" BeforeTargets="Build" >
+    <ItemGroup>
+      <SassFilesInProject Include="@(None);@(Content)" Condition="'%(Extension)' == '.Sass' Or '%(Extension)' == '.Scss'" />
+    </ItemGroup>
+
+    <Message Text="Delegate_SassCompile: Compiling %(SassFilesInProject.Identity)" Importance="high" />
+
+    <Exec ConsoleToMSBuild="true" ConsoleOutput="true" Command="&quot;$(SassExe)&quot; -t compressed &quot;%(SassFilesInProject.Identity)&quot; &quot;%(SassFilesInProject.relativedir)%(SassFilesInProject.Filename).css&quot; ">
+      <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+    </Exec>
+  </Target>
+
+  <Target Name="Delegate_SassClean" BeforeTargets="Clean">
+    <ItemGroup>
+      <SassFilesInProject Include="@(None);@(Content)" Condition="'%(Extension)' == '.Sass'" />
+    </ItemGroup>
+
+    <Message Text="Delegate_SassCompile: Cleaning @(SassFilesInProject->'%(relativedir)%(Filename).css')" Importance="high" />
+
+    <Delete Files="@(SassFilesInProject->'%(relativedir)%(Filename).css')" />
+  </Target>
+
+</Project>
