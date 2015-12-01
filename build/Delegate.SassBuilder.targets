@@ -34,9 +34,7 @@
 
     <Message Text="Delegate_SassCompile: Compiling %(SassFilesInProject.Identity)" Importance="high" />
 
-    <Exec ConsoleToMSBuild="true" ConsoleOutput="true" Command="&quot;$(SassExe)&quot; -t compressed &quot;%(SassFilesInProject.Identity)&quot; &quot;%(SassFilesInProject.relativedir)%(SassFilesInProject.Filename).css&quot; ">
-      <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
-    </Exec>
+    <Exec Command="&quot;$(SassExe)&quot; -t compressed &quot;%(SassFilesInProject.Identity)&quot; &quot;%(SassFilesInProject.relativedir)%(SassFilesInProject.Filename).css&quot; " />
   </Target>
 
   <Target Name="Delegate_SassClean" BeforeTargets="Clean">
