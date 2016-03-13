@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SassFiles Include="$(MSBuildProjectDirectory)\**\*.Sass">
+    <SassFiles Include="$(MSBuildProjectDirectory)\**\*.sass" Condition="!($([System.String]::Copy(%(Filename)).StartsWith('_')))" >
       <InProject>false</InProject>
     </SassFiles>
-    <SassFiles Include="$(MSBuildProjectDirectory)\**\*.Scss">
+    <SassFiles Include="$(MSBuildProjectDirectory)\**\*.scss" Condition="!($([System.String]::Copy(%(Filename)).StartsWith('_')))">
       <InProject>false</InProject>
     </SassFiles>
   </ItemGroup>
@@ -29,7 +29,7 @@
 
   <Target Name="Delegate_SassCompile" Inputs="@(SassFiles)" Outputs="@(SassFiles->'%(relativedir)%(Filename).css')" BeforeTargets="Build" >
     <ItemGroup>
-      <SassFilesInProject Include="@(None);@(Content)" Condition="'%(Extension)' == '.Sass' Or '%(Extension)' == '.Scss'" />
+      <SassFilesInProject Include="@(None);@(Content)" Condition="('%(Extension)' == '.sass' Or '%(Extension)' == '.scss') And !($([System.String]::Copy(%(Filename)).StartsWith('_')))" />
     </ItemGroup>
 
     <Message Text="Delegate_SassCompile: Compiling %(SassFilesInProject.Identity)" Importance="high" />
@@ -39,7 +39,7 @@
 
   <Target Name="Delegate_SassClean" BeforeTargets="Clean">
     <ItemGroup>
-      <SassFilesInProject Include="@(None);@(Content)" Condition="'%(Extension)' == '.Sass'" />
+      <SassFilesInProject Include="@(None);@(Content)" Condition="('%(Extension)' == '.sass' Or '%(Extension)' == '.scss') And !($([System.String]::Copy(%(Filename)).StartsWith('_')))" />
     </ItemGroup>
 
     <Message Text="Delegate_SassCompile: Cleaning @(SassFilesInProject->'%(relativedir)%(Filename).css')" Importance="high" />

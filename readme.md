@@ -6,11 +6,12 @@ There is no manual intervention required; all .sass/.scss files included in the 
 
 No external dependencies and no dll references will be added to your project.
 
-Tested with Visual Studio 2013.
+Tested with Visual Studio 2015.
 
 
 Works well with package restore on a build server too, though you need to do the package restore as described here https://docs.nuget.org/consume/package-restore/team-build.
 
+Note: Does (no longer) create css files for partials (files starting with "_").
 
 Enjoy!
 
